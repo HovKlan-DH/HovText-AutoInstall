@@ -12,25 +12,55 @@ using System.Linq;
 
 namespace HovText_Update
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
         string hovtextPage = "https://hovtext.com";
         string[] startupArgs;
         int secs = 5;
+        string appVer = "";
 
-        public Form1(string[] args)
+        public Main(string[] args)
         {
             InitializeComponent();
             label3.Text = "";
             startupArgs = args;
 
             // Subscribe to the Load event
-            Load += new EventHandler(Form1_Load);
+            Load += new EventHandler(Main_Load);
+
+            // Get application file version from assembly
+            Assembly assemblyInfo = Assembly.GetExecutingAssembly();
+            string assemblyVersion = FileVersionInfo.GetVersionInfo(assemblyInfo.Location).FileVersion;
+            string year = assemblyVersion.Substring(0, 4);
+            string month = assemblyVersion.Substring(5, 2);
+            string day = assemblyVersion.Substring(8, 2);
+            switch (month)
+            {
+                case "01": month = "January"; break;
+                case "02": month = "February"; break;
+                case "03": month = "March"; break;
+                case "04": month = "April"; break;
+                case "05": month = "May"; break;
+                case "06": month = "June"; break;
+                case "07": month = "July"; break;
+                case "08": month = "August"; break;
+                case "09": month = "September"; break;
+                case "10": month = "October"; break;
+                case "11": month = "November"; break;
+                case "12": month = "December"; break;
+                default: month = "Unknown"; break;
+            }
+            day = day.TrimStart(new Char[] { '0' }); // remove leading zero
+            day = day.TrimEnd(new Char[] { '.' }); // remove last dot
+            string date = year + "-" + month + "-" + day;
+            appVer = (date).Trim();
+
+            Text = "HovText Update (version "+ appVer +")";
 
             TopMost = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
             CenterLabel(label3);
         }
@@ -60,33 +90,6 @@ namespace HovText_Update
 
         private void StartUpdate()
         {
-
-            // Get application file version from assembly
-            Assembly assemblyInfo = Assembly.GetExecutingAssembly();
-            string assemblyVersion = FileVersionInfo.GetVersionInfo(assemblyInfo.Location).FileVersion;
-            string year = assemblyVersion.Substring(0, 4);
-            string month = assemblyVersion.Substring(5, 2);
-            string day = assemblyVersion.Substring(8, 2);
-            switch (month)
-            {
-                case "01": month = "January"; break;
-                case "02": month = "February"; break;
-                case "03": month = "March"; break;
-                case "04": month = "April"; break;
-                case "05": month = "May"; break;
-                case "06": month = "June"; break;
-                case "07": month = "July"; break;
-                case "08": month = "August"; break;
-                case "09": month = "September"; break;
-                case "10": month = "October"; break;
-                case "11": month = "November"; break;
-                case "12": month = "December"; break;
-                default: month = "Unknown"; break;
-            }
-            day = day.TrimStart(new Char[] { '0' }); // remove leading zero
-            day = day.TrimEnd(new Char[] { '.' }); // remove last dot
-            string date = year + "-" + month + "-" + day;
-            string appVer = (date).Trim();
 
             // Get the argument passed - should be either "Development" or "Stable"
             string envType = "";

@@ -1,6 +1,6 @@
 ﻿namespace HovText_Update
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -72,7 +72,7 @@
             this.label3.Text = "Fetching newest DEVELOPMENT version from HovText home page";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // Form1
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -85,7 +85,7 @@
             this.MaximumSize = new System.Drawing.Size(522, 285);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(522, 285);
-            this.Name = "Form1";
+            this.Name = "Main";
             this.Text = "HovText Update";
             this.ResumeLayout(false);
             this.PerformLayout();

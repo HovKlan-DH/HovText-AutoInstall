@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("The Hovgaard Klan")]
 [assembly: AssemblyProduct("HovText Updater")]
-[assembly: AssemblyCopyright("Copyright © 2004-2023")]
+[assembly: AssemblyCopyright("Copyright © 2004-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2023.12.30.1")]
-[assembly: AssemblyFileVersion("2023.12.30.1")]
+[assembly: AssemblyVersion("2024.01.03.1")]
+[assembly: AssemblyFileVersion("2024.01.03.1")]
 [assembly: NeutralResourcesLanguage("en")]
