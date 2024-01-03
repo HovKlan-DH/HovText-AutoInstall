@@ -10,7 +10,7 @@ using System.Management;
 using System.Linq;
 
 
-namespace HovText_Updater
+namespace HovText_Update
 {
     public partial class Form1 : Form
     {

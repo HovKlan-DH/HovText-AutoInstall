@@ -1,4 +1,4 @@
-﻿namespace HovText_Updater
+﻿namespace HovText_Update
 {
     partial class Form1
     {
@@ -86,7 +86,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(522, 285);
             this.Name = "Form1";
-            this.Text = "HovText Updater";
+            this.Text = "HovText Update";
             this.ResumeLayout(false);
             this.PerformLayout();
 
