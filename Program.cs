@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace HovText_Update
+namespace HovText_AutoInstall
 {
     internal static class Program
     {

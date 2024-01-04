@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HovText Updater")]
-[assembly: AssemblyDescription("An embedded updater for HovText clipboard manager")]
+[assembly: AssemblyTitle("HovText Auto-Install")]
+[assembly: AssemblyDescription("An embedded installer/updater for HovText clipboard manager")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("The Hovgaard Klan")]
-[assembly: AssemblyProduct("HovText Updater")]
+[assembly: AssemblyProduct("HovText Auto-Install")]
 [assembly: AssemblyCopyright("Copyright © 2004-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2024.01.03.1")]
-[assembly: AssemblyFileVersion("2024.01.03.1")]
+[assembly: AssemblyVersion("2024.01.04.1")]
+[assembly: AssemblyFileVersion("2024.01.04.1")]
 [assembly: NeutralResourcesLanguage("en")]

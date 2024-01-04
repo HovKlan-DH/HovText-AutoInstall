@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{16DB7C8E-E896-40A0-BA62-D5BB6B1BCA82}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>HovText_Update</RootNamespace>
-    <AssemblyName>HovText Update</AssemblyName>
+    <RootNamespace>HovText_AutoInstall</RootNamespace>
+    <AssemblyName>HovText Auto-Install</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

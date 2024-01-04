@@ -8,9 +8,10 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Management;
 using System.Linq;
+using System.Drawing;
 
 
-namespace HovText_Update
+namespace HovText_AutoInstall
 {
     public partial class Main : Form
     {
@@ -18,15 +19,12 @@ namespace HovText_Update
         string[] startupArgs;
         int secs = 5;
         string appVer = "";
+        string appType = "STABLE";
 
         public Main(string[] args)
         {
             InitializeComponent();
-            label3.Text = "";
             startupArgs = args;
-
-            // Subscribe to the Load event
-            Load += new EventHandler(Main_Load);
 
             // Get application file version from assembly
             Assembly assemblyInfo = Assembly.GetExecutingAssembly();
@@ -55,21 +53,47 @@ namespace HovText_Update
             string date = year + "-" + month + "-" + day;
             appVer = (date).Trim();
 
-            Text = "HovText Update (version "+ appVer +")";
+            Text = "HovText Auto-Install (version "+ appVer +")";
 
             TopMost = true;
+
+            tabControl1.ItemSize = new Size(0, 1);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.Appearance = TabAppearance.FlatButtons;
+
+            appType = GetAppTypeToInstall();
+            label5.Text = $"Install newest [{appType}] version";
+
+            Shown += new EventHandler(Main_Shown);
         }
 
-        private void Main_Load(object sender, EventArgs e)
+        private void Main_Shown(object sender, EventArgs e)
         {
-            CenterLabel(label3);
+               
+            if (startupArgs.Length > 0)
+            {
+                tabControl1.SelectedIndex = 1;
+            }
+        }
+
+        private string GetAppTypeToInstall ()
+        {
+
+            if (startupArgs.Length > 0)
+            {
+                if (startupArgs[0].ToLower() == "development")
+                {        
+                    return "DEVELOPMENT";
+                }
+            }
+            return appType;
         }
 
         private void CenterLabel(Label label)
         {
             label.Location = new System.Drawing.Point(
-                (this.ClientSize.Width - label.Width) / 2,
-                (this.ClientSize.Height - label.Height) / 2
+                (ClientSize.Width - label.Width) / 2,
+                (ClientSize.Height - label.Height) / 2
             );
             label.Anchor = AnchorStyles.None;
         }
@@ -88,21 +112,31 @@ namespace HovText_Update
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            appType = "STABLE";
+            label5.Text = "Install newest [STABLE] version";
+            StartUpdate();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            appType = "DEVELOPMENT";
+            label5.Text = "Install newest [DEVELOPMENT] version";
+            StartUpdate();
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 1)
+            {
+                timer1.Enabled = true;
+            }
+        }
+
         private void StartUpdate()
         {
-
-            // Get the argument passed - should be either "Development" or "Stable"
-            string envType = "";
-            if(startupArgs.Length > 0)
-            {
-                if (startupArgs[0].ToLower() == "stable")
-                {
-                    envType = "STABLE";
-                } else
-                {
-                    envType = "DEVELOPMENT";
-                }
-            }
+            tabControl1.SelectedIndex = 2;
 
             // Get OS name
             string osVersion = (string)(from x in new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get().Cast<ManagementObject>() select x.GetPropertyValue("Caption")).FirstOrDefault();
@@ -110,7 +144,7 @@ namespace HovText_Update
 
             // Get the newest stable version
             string newestStableVersion = "";
-            if (envType == "STABLE")
+            if (appType == "STABLE")
             {
                 try
                 {
@@ -118,7 +152,7 @@ namespace HovText_Update
                     WebClient webClient = new WebClient();
                     ServicePointManager.Expect100Continue = true;
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
-                    webClient.Headers.Add("user-agent", ("HovText Updater " + appVer).Trim());
+                    webClient.Headers.Add("user-agent", ("HovText Auto-Install " + appVer).Trim());
 
                     // Prepare the POST data
                     var postData = new System.Collections.Specialized.NameValueCollection
@@ -142,8 +176,8 @@ namespace HovText_Update
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("HovText Updater error:\r\n\r\n" + ex.Message,
-                        "HovText Updater ERROR",
+                    MessageBox.Show("HovText Auto-Install error:\r\n\r\n" + ex.Message,
+                        "HovText Auto-Install ERROR",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     closeNow = true;
@@ -153,11 +187,12 @@ namespace HovText_Update
             if(!closeNow)
             {
             
-                label3.Text = $"Fetching newest [{envType}] version from HovText home page.\n\nPlease wait ...";
+                label3.Text = $"Fetching newest [{appType}] version from HovText home page.\n\nPlease wait ...";
+//                CenterLabel(label3);
                 Refresh();
 
                 // Set some variables
-                string folderAndExe = envType == "DEVELOPMENT" ? "autoupdate/development/HovText.exe" : "download/" + newestStableVersion + "/HovText.exe";
+                string folderAndExe = appType == "DEVELOPMENT" ? "autoupdate/development/HovText.exe" : "download/" + newestStableVersion + "/HovText.exe";
                 string updateExe = hovtextPage +"/"+ folderAndExe;
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 string pathAndTempExe = Path.Combine(baseDirectory, "HovText.exe");
@@ -171,8 +206,8 @@ namespace HovText_Update
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("HovText Updater error:\r\n\r\n" + ex.Message,
-                            "HovText Updater ERROR",
+                        MessageBox.Show("HovText Auto-Install error:\r\n\r\n" + ex.Message,
+                            "HovText Auto-Install ERROR",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                         closeNow = true;
@@ -189,8 +224,8 @@ namespace HovText_Update
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("HovText Updater error:\r\n\r\n" + ex.Message,
-                            "HovText Updater ERROR",
+                        MessageBox.Show("HovText Auto-Install error:\r\n\r\n" + ex.Message,
+                            "HovText Auto-Install ERROR",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                         closeNow = true;
@@ -208,5 +243,7 @@ namespace HovText_Update
             // Terminate the main application
             Close();
         }
+
+        
     }
 }
